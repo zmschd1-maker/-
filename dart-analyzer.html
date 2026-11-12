@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DART 재무제표 분석기 — 프로젝트 소개 · 임하람</title>
+<meta name="description" content="경영지원·인사총무 실무자 임하람이 구직 공백기에 AI 코딩 도구를 활용해 1인 개발한 DART 재무제표 분석기 프로젝트 소개.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F2EC; --paper-2:#EFEBE2; --card:#FCFAF6; --ink:#1F2328; --ink-2:#3D434B;
+    --muted:#6B7078; --faint:#9AA0A6; --line:#DFD9CE; --line-2:#CFC8BA;
+    --blue:#1C3A5E; --blue-2:#2E5580; --burgundy:#8A3033; --gold-ink:#8A6D2F;
+    --serif:'Newsreader','Pretendard Variable',serif;
+    --sans:'Pretendard Variable',-apple-system,system-ui,sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+    line-height:1.75; letter-spacing:-.006em; -webkit-font-smoothing:antialiased; }
+  a{ color:var(--burgundy); }
+  .wrap{ max-width:900px; margin:0 auto; padding:0 30px; }
+  nav{ border-bottom:1px solid var(--line); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:13px 30px; }
+  nav .brand{ font-family:var(--serif); font-weight:600; color:var(--blue); }
+  nav a{ text-decoration:none; font-family:var(--mono); font-size:.76rem; color:var(--muted); }
+  nav a:hover{ color:var(--burgundy); }
+  header{ padding:62px 0 40px; }
+  .rule-top{ height:2px; background:var(--blue); margin-bottom:8px; }
+  .rule-thin{ height:1px; background:var(--line-2); margin-bottom:30px; }
+  .kicker{ font-family:var(--mono); font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--burgundy); margin-bottom:14px; }
+  h1{ font-family:var(--serif); font-weight:500; font-size:clamp(2.2rem,6vw,3.4rem); line-height:1.05; margin:0; letter-spacing:-.02em; }
+  .lede{ margin-top:22px; font-size:1.1rem; color:var(--ink-2); max-width:66ch; }
+  .lede b{ color:var(--ink); }
+  section{ padding:44px 0; }
+  .divider{ height:1px; background:var(--line); }
+  .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:16px; }
+  .sec-head .no{ font-family:var(--mono); font-size:.74rem; color:#fff; background:var(--blue); border-radius:3px; padding:2px 8px; }
+  .sec-head h2{ font-family:var(--serif); font-weight:600; font-size:clamp(1.4rem,3.4vw,1.9rem); margin:0; }
+  .snap{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:8px 0 6px; }
+  @media (min-width:720px){ .snap{ grid-template-columns:repeat(4,1fr); } }
+  .snap-cell{ background:var(--card); padding:20px 18px; }
+  .snap-cell .v{ font-family:var(--serif); font-weight:600; font-size:1.5rem; color:var(--blue); line-height:1.1; }
+  .snap-cell .k{ font-size:.82rem; color:var(--muted); margin-top:9px; line-height:1.5; }
+  ul.feat{ list-style:none; padding:0; margin:0; display:grid; gap:11px; }
+  ul.feat li{ font-size:.96rem; color:var(--ink-2); padding-left:20px; position:relative; }
+  ul.feat li::before{ content:'▹'; position:absolute; left:0; color:var(--blue-2); }
+  ul.feat li b{ color:var(--ink); font-weight:600; }
+  .note{ background:var(--card); border:1px solid var(--line); border-left:3px solid var(--burgundy);
+    border-radius:8px; padding:18px 20px; font-size:.92rem; color:var(--muted); margin-top:8px; }
+  .note b{ color:var(--ink); }
+  .links{ display:flex; flex-wrap:wrap; gap:12px; margin-top:6px; }
+  .btn{ display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:var(--mono);
+    font-size:.81rem; color:#fff; background:var(--blue); padding:11px 20px; border-radius:6px; }
+  .btn:hover{ background:var(--blue-2); }
+  .btn.ghost{ background:transparent; color:var(--blue); border:1px solid var(--line-2); }
+  .btn.ghost:hover{ background:var(--paper-2); }
+  footer{ padding:40px 0 80px; color:var(--faint); font-size:.8rem; }
+  .foot-rule{ height:2px; background:var(--blue); margin-bottom:22px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">임하람</div>
+    <a href="index.html">← 이력서로 돌아가기</a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="rule-top"></div>
+    <div class="rule-thin"></div>
+    <div class="kicker">Project 01 · 1인 개발 · 도구: Claude</div>
+    <h1>DART 재무제표 분석기</h1>
+    <p class="lede">
+      인사·총무만 해오던 제가 <b>구직 공백기에 AI 코딩 도구를 배워 처음부터 끝까지 직접 만든 웹 서비스</b>입니다.
+      이 페이지는 면접에서 코드를 열어보기 전에, 무엇을 왜 만들었는지 먼저 확인하실 수 있도록 정리한 소개입니다.
+    </p>
+  </div>
+</header>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="snap">
+      <div class="snap-cell"><div class="v">1인</div><div class="k">기획·개발·배포를 혼자</div></div>
+      <div class="snap-cell"><div class="v">7종</div><div class="k">외부 공개 API 연동</div></div>
+      <div class="snap-cell"><div class="v">10분</div><div class="k">동일 요청 캐시로 호출 절감</div></div>
+      <div class="snap-cell"><div class="v">0</div><div class="k">소스에 남긴 API 키</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="no">01</span><h2>무엇을 하는 도구인가</h2></div>
+    <ul class="feat">
+      <li><b>DART 전자공시 재무제표</b> — 기업 코드를 입력하면 공시된 재무제표를 불러와 주요 계정을 한 화면에 정리합니다.</li>
+      <li><b>한국투자증권(KIS) Open API</b> — 현재가·시가총액·PER 같은 시세 지표와 과거 차트 데이터를 붙여 재무 수치와 함께 보여줍니다.</li>
+      <li><b>거시지표</b> — 한국은행 ECOS 지표와 네이버 실시간 시세·뉴스 검색을 함께 불러와, 숫자 옆에 맥락을 둡니다.</li>
+      <li><b>해외 비교</b> — Yahoo Finance와 SEC EDGAR 데이터로 같은 기준의 해외 기업 재무를 나란히 볼 수 있게 확장했습니다.</li>
+      <li><b>리포트 문장 생성</b> — Gemini로 분석 결과를 문장으로 풀어내, 숫자를 읽지 않아도 요지를 잡을 수 있게 했습니다.</li>
+    </ul>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="no">02</span><h2>어떻게 만들었나</h2></div>
+    <ul class="feat">
+      <li><b>파이썬 표준 라이브러리만 사용</b> — 별도 프레임워크 없이 <code>http.server</code>·<code>urllib</code>·<code>zipfile</code>로 서버와 DART 문서 파싱까지 직접 구성했습니다. 환경이 달라져도 그대로 돌아가게 하려는 선택이었습니다.</li>
+      <li><b>키는 환경변수로</b> — DART·KIS·네이버·Gemini 키는 소스에 적지 않고 배포 환경변수에서만 읽습니다. 필수 키가 비어 있으면 서버가 시작할 때 경고를 남기게 했습니다.</li>
+      <li><b>과호출 방지</b> — 같은 요청은 10분 캐시로 묶고, IP당 분당 호출 수를 제한해 외부 API 한도와 요금을 지키도록 했습니다.</li>
+      <li><b>실행 가이드까지</b> — 저장소 README에 키 발급·재발급 절차, 로컬 실행, 무료 호스팅 배포 순서를 단계별로 정리해 두었습니다. 남이 다시 돌려볼 수 있어야 완성이라고 봤습니다.</li>
+    </ul>
+    <div class="note">
+      <b>정직하게 밝힙니다.</b> 이 서비스는 재무·회계 전문가의 산출물이 아닙니다. 제가 보여드리려는 것은
+      특정 분야의 전문성이 아니라, <b>낯선 영역의 복잡한 결과물도 AI라는 도구를 제대로 부려 완성 단계까지 끌고 가는 실행력</b>입니다.
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="no">03</span><h2>지금 상태와 링크</h2></div>
+    <ul class="feat">
+      <li><b>라이브 데모는 운영하지 않습니다.</b> 외부 API 키와 유료 호스팅이 필요한 구조라, 지금은 코드와 실행 가이드를 공개하는 방식으로 두었습니다.</li>
+      <li><b>저장소</b> — 전체 코드(app.py), 의존성, 배포 설정, 실행 가이드가 함께 있습니다.</li>
+    </ul>
+    <div class="links">
+      <a class="btn" href="https://github.com/zmschd1-maker/dart-finance-analyzer" target="_blank" rel="noopener">GitHub 저장소 열기 ↗</a>
+      <a class="btn ghost" href="https://github.com/zmschd1-maker/dart-finance-analyzer#readme" target="_blank" rel="noopener">실행 가이드(README) ↗</a>
+      <a class="btn ghost" href="index.html">이력서로 돌아가기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-rule"></div>
+    <p>임하람 · zmschd@naver.com · 010-5622-1192</p>
+  </div>
+</footer>
+
+</body>
+</html>
