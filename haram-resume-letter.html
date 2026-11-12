@@ -280,9 +280,10 @@
   .answer{
     margin-top:20px; padding:20px 22px; background:var(--paper); border:1px solid var(--line);
     border-left:3px solid var(--burgundy); border-radius:8px; font-size:.97rem; color:var(--ink-2);
-    display:none; white-space:pre-wrap; line-height:1.75;
+    display:none; line-height:1.75;
   }
   .answer.show{ display:block; animation:fadein .4s ease; }
+  #answerText{ white-space:pre-wrap; }
   @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
   .answer .src{ font-family:var(--mono); font-size:.65rem; color:var(--burgundy); text-transform:uppercase; letter-spacing:.1em; display:block; margin-bottom:10px; }
 
