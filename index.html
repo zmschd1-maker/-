@@ -529,8 +529,8 @@
     <!-- LIVE : 실무 자동화 · 웹 프로젝트 -->
     <div class="pf-sub">
       <h3>실무 자동화 · 웹 프로젝트</h3>
-      <p>링크를 누르면 <b>그 자리에서 바로 실행</b>됩니다. 설치·로그인·서버 없이 브라우저에서 동작하고,
-        실제 공시 데이터가 들어 있어 기업 전환·차트·자동 진단까지 직접 눌러볼 수 있습니다.</p>
+      <p>링크를 누르면 <b>실제 서버가 그 자리에서 바로 열립니다.</b> 설치나 로그인 없이 브라우저에서 동작하고,
+        DART 공시 재무제표와 한국투자증권 실시간 시세가 연동되어 기업 검색·기업 전환·차트·자동 진단까지 직접 눌러볼 수 있습니다.</p>
     </div>
 
     <div class="pf pf-live">
@@ -539,17 +539,18 @@
         <h3>DART 재무제표 분석기</h3>
         <p class="desc">인사·총무만 해오던 제가 구직 공백기에 AI 코딩 도구를 배워, 처음부터 끝까지 직접 만든 웹 서비스입니다. 아래 버튼을 누르면 지금 바로 실행됩니다.</p>
         <ul class="pf-feats">
-          <li>삼성전자 · 현대자동차 · 한화에어로스페이스 <b>2023~2025년 연결 재무제표</b> 내장</li>
-          <li>기업 전환 · 억원/조원 단위 전환 · 전년 대비(YoY) 표시</li>
-          <li>손익계산서 · 재무상태표 · 현금흐름표 + 재무 지표 11종</li>
-          <li>SVG 추이 차트 3종과 규칙 기반 자동 재무 진단, 3개사 지표 비교</li>
+          <li>기업명 검색 → <b>DART 5개년 연결 재무제표</b> 즉시 조회</li>
+          <li>한국투자증권(KIS) <b>실시간 시세 · 시가총액 · PER</b> 연동</li>
+          <li>손익계산서 · 재무상태표 · 현금흐름표 + 재무비율 자동 계산</li>
+          <li>미국 주식(Yahoo Finance·SEC EDGAR) 비교, 뉴스·거시지표 대시보드</li>
         </ul>
         <div class="pf-actions">
-          <a class="pf-btn live" href="projects/dart-analyzer.html">바로 실행하기 →</a>
+          <a class="pf-btn live" href="https://dart-finance-analyzer-live.vercel.app" target="_blank" rel="noopener">바로 실행하기 →</a>
           <a class="pf-btn ghost" href="dart-analyzer.html">프로젝트 소개</a>
+          <a class="pf-btn ghost" href="projects/dart-analyzer.html">정적 데모(백업)</a>
           <a class="pf-btn ghost" href="https://github.com/zmschd1-maker/dart-finance-analyzer" target="_blank" rel="noopener">GitHub 저장소 ↗</a>
         </div>
-        <p class="pf-live-note">※ 서버·API 키·로그인 없이 동작하는 데모입니다. 원본 앱은 DART 공시 · 한국투자증권(KIS) 시세 · 네이버 뉴스 · 한국은행 ECOS 거시지표 · 미국 주식(Yahoo·SEC EDGAR) · Gemini 리포트 생성까지 연동하며, 여기서는 그중 재무제표 분석 화면을 그대로 재현했습니다.</p>
+        <p class="pf-live-note">※ 실제 파이썬 서버가 Vercel 무료 플랜에서 돌아가는 라이브 버전입니다. DART 공시 · 한국투자증권(KIS) 시세 · 네이버 뉴스 · 미국 주식(Yahoo·SEC EDGAR) · Gemini 리포트 연동을 그대로 담았고, API 키는 모두 서버 환경변수로 분리해 소스코드에 두지 않았습니다. (같은 화면의 정적 백업 데모도 남겨 두었습니다.)</p>
       </div>
     </div>
 
@@ -736,7 +737,7 @@ const KB = [
 
 기능은 DART 재무제표 조회, 한국투자증권(KIS) 시세·시가총액·PER, 네이버 뉴스, 한국은행 ECOS 거시지표, 미국 주식(Yahoo Finance·SEC EDGAR) 비교, Gemini로 리포트 문장 생성까지 확장했습니다. 서버는 파이썬 표준 라이브러리만으로 직접 구성했고, 같은 요청은 10분 캐시로 묶어 외부 API 호출을 줄였으며 IP당 요청 수를 제한해 두었습니다. 키는 전부 환경변수로 분리했습니다.
 
-만들면서 배운 것은 문법이 아니라 '요구를 잘게 쪼개 하나씩 검증하며 끝까지 완성하는 방식'이었습니다. 현재 라이브 데모는 내려가 있고, 코드와 실행 가이드는 github.com/zmschd1-maker/dart-finance-analyzer 에 공개해 두었습니다.`
+만들면서 배운 것은 문법이 아니라 '요구를 잘게 쪼개 하나씩 검증하며 끝까지 완성하는 방식'이었습니다. 라이브 데모는 dart-finance-analyzer-live.vercel.app 에서 실제 서버로 돌아가고 있고(무료 Vercel 호스팅), 코드와 실행 가이드는 github.com/zmschd1-maker/dart-finance-analyzer 에 공개해 두었습니다.`
   },
   {
     k: ['공백기', '구직', '요즘', '최근', '역량을', '무엇을 했', '쉬는 동안', '준비'],
