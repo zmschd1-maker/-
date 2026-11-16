@@ -198,6 +198,18 @@
     margin:14px 0 0; font-family:var(--mono); font-size:.73rem; color:var(--faint); line-height:1.7;
   }
 
+  /* live demo emphasis */
+  .pf-sub{ margin:6px 0 16px; }
+  .pf-sub h3{ font-family:var(--serif); font-weight:600; font-size:1.34rem; margin:0 0 7px; letter-spacing:-.01em; }
+  .pf-sub p{ margin:0; color:var(--muted); font-size:.94rem; max-width:66ch; }
+  .pf-sub p b{ color:var(--ink); }
+  .pf-live{ border-color:var(--line-2); box-shadow:0 2px 20px rgba(28,58,94,.07); }
+  .pf-live .tag{ display:inline-flex; align-items:center; gap:8px; }
+  .live-dot{ width:7px; height:7px; border-radius:50%; background:var(--burgundy); display:inline-block; animation:livePulse 2s ease-in-out infinite; }
+  @keyframes livePulse{ 0%,100%{ opacity:1; } 50%{ opacity:.3; } }
+  .pf-btn.live{ background:var(--burgundy); font-size:.86rem; padding:13px 24px; }
+  .pf-btn.live:hover{ background:var(--burgundy-soft); }
+
   /* embedded deck viewer */
   .deck-frame{
     margin-top:4px; border-top:1px solid var(--line);
@@ -514,23 +526,30 @@
       제가 증명하려는 건 특정 분야의 전문성이 아니라, <b>낯선 영역의 복잡한 결과물도 AI라는 도구를 제대로 부려 완성 단계까지 끌고 가는 실행력</b>입니다.
     </p>
 
-    <!-- PF1 -->
-    <div class="pf">
+    <!-- LIVE : 실무 자동화 · 웹 프로젝트 -->
+    <div class="pf-sub">
+      <h3>실무 자동화 · 웹 프로젝트</h3>
+      <p>링크를 누르면 <b>그 자리에서 바로 실행</b>됩니다. 설치·로그인·서버 없이 브라우저에서 동작하고,
+        실제 공시 데이터가 들어 있어 기업 전환·차트·자동 진단까지 직접 눌러볼 수 있습니다.</p>
+    </div>
+
+    <div class="pf pf-live">
       <div class="pf-top">
-        <span class="tag">PROJECT 01 · 1인 개발 · 도구: Claude</span>
+        <span class="tag"><span class="live-dot"></span> LIVE DEMO · 1인 개발 · 도구: Claude</span>
         <h3>DART 재무제표 분석기</h3>
-        <p class="desc">인사·총무만 해오던 제가 구직 공백기에 AI 코딩 도구를 배워, 처음부터 끝까지 직접 만든 웹 서비스입니다.</p>
+        <p class="desc">인사·총무만 해오던 제가 구직 공백기에 AI 코딩 도구를 배워, 처음부터 끝까지 직접 만든 웹 서비스입니다. 아래 버튼을 누르면 지금 바로 실행됩니다.</p>
         <ul class="pf-feats">
-          <li>DART 공시 데이터와 실시간 시세를 통합해 재무제표 자동 분석</li>
-          <li>KIS·네이버 뉴스·한국은행 ECOS 거시지표 연동</li>
-          <li>미국 주식(Yahoo Finance·SEC EDGAR)까지 확장한 글로벌 비교</li>
-          <li>AI 시나리오 분석 및 PDF 리포트 자동 생성</li>
+          <li>삼성전자 · 현대자동차 · 한화에어로스페이스 <b>2023~2025년 연결 재무제표</b> 내장</li>
+          <li>기업 전환 · 억원/조원 단위 전환 · 전년 대비(YoY) 표시</li>
+          <li>손익계산서 · 재무상태표 · 현금흐름표 + 재무 지표 11종</li>
+          <li>SVG 추이 차트 3종과 규칙 기반 자동 재무 진단, 3개사 지표 비교</li>
         </ul>
         <div class="pf-actions">
-          <a class="pf-btn" href="https://github.com/zmschd1-maker/dart-finance-analyzer" target="_blank" rel="noopener">GitHub 프로젝트 저장소 보기 ↗</a>
-          <a class="pf-btn ghost" href="dart-analyzer.html">프로젝트 소개 보기</a>
+          <a class="pf-btn live" href="projects/dart-analyzer.html">바로 실행하기 →</a>
+          <a class="pf-btn ghost" href="dart-analyzer.html">프로젝트 소개</a>
+          <a class="pf-btn ghost" href="https://github.com/zmschd1-maker/dart-finance-analyzer" target="_blank" rel="noopener">GitHub 저장소 ↗</a>
         </div>
-        <p class="pf-live-note">※ 라이브 데모는 현재 운영하지 않습니다. 코드와 실행 가이드는 위 저장소에 공개해 두었습니다.</p>
+        <p class="pf-live-note">※ 서버·API 키·로그인 없이 동작하는 데모입니다. 원본 앱은 DART 공시 · 한국투자증권(KIS) 시세 · 네이버 뉴스 · 한국은행 ECOS 거시지표 · 미국 주식(Yahoo·SEC EDGAR) · Gemini 리포트 생성까지 연동하며, 여기서는 그중 재무제표 분석 화면을 그대로 재현했습니다.</p>
       </div>
     </div>
 
