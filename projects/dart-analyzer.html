@@ -334,7 +334,7 @@
         <b>데모 데이터</b>
         <ul>
           <li>삼성전자(005930) · 현대자동차(005380) · 한화에어로스페이스(012450)의 <b>2023·2024·2025 사업연도 연결 재무제표</b>입니다.</li>
-          <li>값은 금융감독원 전자공시(DART) 사업보고서 공시값을 기준으로 정리했고, 표기 단위는 억원입니다. 지표(영업이익률·ROE·부채비율·EPS·PER 등)는 공시값 기준으로 표기했습니다.</li>
+          <li>값은 금융감독원 전자공시(DART) 사업보고서 연결 재무제표 공시값을 기준으로 정리했고(네이버금융·FnGuide 표기), 표기 단위는 억원입니다.</li>
           <li>주가는 2026년 11월 16일 종가 기준이며, 이후에는 달라집니다.</li>
           <li>이 페이지는 <b>서버·API 키·로그인이 필요 없습니다.</b> 데이터가 파일 안에 들어 있어 링크만 누르면 바로 동작합니다.</li>
         </ul>
@@ -440,18 +440,30 @@
     return n(Math.round(v));
   }
 
-  function yoyText(arr, i, isRatio){
-    if(i+1 >= arr.length) return '';
-    var prev = arr[i+1], v = arr[i];
-    if(prev==null || v==null || prev===0) return '';
-    if(isRatio){
+  function pctChange(v, prev){
+    if(prev==null || v==null || prev===0) return null;
+    if((v>=0) !== (prev>=0)) return { flip:true, txt:(v>0 ? '흑자 전환' : '적자 전환') };
+    var pct;
+    if(v<0 && prev<0) pct = (Math.abs(v)/Math.abs(prev) - 1) * 100;
+    else pct = (v/prev - 1) * 100;
+    return { pct:pct };
+  }
+
+  /* mode: 'amt'(금액) | 'pct'(비율 %p) */
+  function yoyText(arr, i, mode){
+    if(i<=0) return '';
+    var v = arr[i], prev = arr[i-1];
+    if(v==null || prev==null || isNaN(v) || isNaN(prev)) return '';
+    if(mode==='pct'){
       var dp = v - prev;
       if(Math.abs(dp) < 0.05) return '<span class="yoy flat">–</span>';
       return '<span class="yoy ' + (dp>0?'up':'dn') + '">' + (dp>0?'▲':'▼') + Math.abs(dp).toFixed(1) + 'p</span>';
     }
-    var pct = (v/prev - 1) * 100;
-    if(Math.abs(pct) < 0.05) return '<span class="yoy flat">–</span>';
-    return '<span class="yoy ' + (pct>0?'up':'dn') + '">' + (pct>0?'▲':'▼') + Math.abs(pct).toFixed(1) + '%</span>';
+    var r = pctChange(v, prev);
+    if(!r) return '';
+    if(r.flip) return '<span class="yoy ' + (v>0?'up':'dn') + '">' + r.txt + '</span>';
+    if(Math.abs(r.pct) < 0.05) return '<span class="yoy flat">–</span>';
+    return '<span class="yoy ' + (r.pct>0?'up':'dn') + '">' + (r.pct>0?'▲':'▼') + Math.abs(r.pct).toFixed(1) + '%</span>';
   }
 
   /* ================= 헤더/탭 ================= */
@@ -489,7 +501,7 @@
     document.getElementById('kpi').innerHTML = items.map(function(it){
       var v = it.arr[LAST];
       var val = it.ratio ? v.toFixed(1) : amt(v);
-      var delta = yoyText(it.arr, LAST, it.ratio);
+      var delta = yoyText(it.arr, LAST, it.ratio ? 'pct' : 'amt');
       return '<div class="kpi-cell">'
         + '<div class="k">' + it.k + '</div>'
         + '<div class="v">' + val + '<small>' + it.unit + '</small></div>'
@@ -513,21 +525,25 @@
     ['EPS','eps','원'], ['PER','per','배'], ['BPS','bps','원'], ['PBR','pbr','배'], ['주당배당금','dps','원'], ['배당수익률','divYield','%']
   ];
 
-  function table(rows, isRatio){
+  function fmtValue(v, unit){
+    if(unit === '%') return v.toFixed(2);
+    if(unit === '원' || unit === '배') return n(v);
+    return amt(v);
+  }
+
+  function table(rows){
     var c = cur();
     var head = '<thead><tr><th>항목</th>' + c.years.map(function(y,i){
-      return '<th class="' + (i===LAST?'col-now':'') + '">' + y + '년' + (i===LAST?'':'') + '</th>';
+      return '<th class="' + (i===LAST?'col-now':'') + '">' + y + '년</th>';
     }).join('') + '</tr></thead>';
     var body = '<tbody>' + rows.map(function(r){
       var key = r[1], unit = r[2] || '';
       var arr = c[key] || [];
+      var mode = (unit === '%') ? 'pct' : 'amt';
       return '<tr><th>' + r[0] + '</th>' + c.years.map(function(y,i){
         var v = arr[i];
-        var txt;
-        if(v==null || isNaN(v)) txt = '<span class="dim">-</span>';
-        else if(isRatio) txt = (unit==='%' ? v.toFixed(2) : n(v));
-        else txt = amt(v);
-        var yo = state.yoy ? yoyText(arr, i, isRatio) : '';
+        var txt = (v==null || isNaN(v)) ? '<span class="dim">-</span>' : fmtValue(v, unit);
+        var yo = state.yoy ? yoyText(arr, i, mode) : '';
         return '<td class="' + (i===LAST?'col-now num-strong':'') + '">' + txt + yo + '</td>';
       }).join('') + '</tr>';
     }).join('') + '</tbody>';
@@ -537,16 +553,16 @@
   function renderStatements(){
     var c = cur();
     document.getElementById('statementsBody').innerHTML =
-      '<div class="tbl-block"><div class="tbl-title"><h3>손익계산서</h3><span class="u">단위 ' + unitLabel() + '</span></div>' + table(IS_ROWS, false) + '</div>'
-      + '<div class="tbl-block"><div class="tbl-title"><h3>재무상태표</h3><span class="u">단위 ' + unitLabel() + '</span></div>' + table(BS_ROWS, false) + '</div>'
-      + '<div class="tbl-block"><div class="tbl-title"><h3>현금흐름표</h3><span class="u">단위 ' + unitLabel() + ' · 음수는 유출</span></div>' + table(CF_ROWS, false) + '</div>'
+      '<div class="tbl-block"><div class="tbl-title"><h3>손익계산서</h3><span class="u">단위 ' + unitLabel() + '</span></div>' + table(IS_ROWS) + '</div>'
+      + '<div class="tbl-block"><div class="tbl-title"><h3>재무상태표</h3><span class="u">단위 ' + unitLabel() + '</span></div>' + table(BS_ROWS) + '</div>'
+      + '<div class="tbl-block"><div class="tbl-title"><h3>현금흐름표</h3><span class="u">단위 ' + unitLabel() + ' · 음수는 유출</span></div>' + table(CF_ROWS) + '</div>'
       + '<p class="chart-cap" style="padding:8px 2px 0;">세전계속사업이익·지배주주 순이익은 공시 표기 그대로입니다. 현금흐름표는 연결 기준이며, 회사별로 분류 방식이 달라 단순 비교에는 주의가 필요합니다.</p>';
   }
 
   function renderRatios(){
     var c = cur();
     document.getElementById('ratiosBody').innerHTML =
-      '<div class="tbl-block">' + table(RA_ROWS, true) + '</div>'
+      '<div class="tbl-block">' + table(RA_ROWS) + '</div>'
       + '<p class="chart-cap" style="padding:8px 2px 0;">%는 공시값 기준 비율, 원·배는 주당 지표입니다. PER·PBR은 각 사업연도 말 주가 기준으로 계산된 값입니다.</p>';
   }
 
