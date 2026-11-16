@@ -530,7 +530,8 @@
 
   function fmtValue(v, unit){
     if(unit === '%') return v.toFixed(2);
-    if(unit === '원' || unit === '배') return n(v);
+    if(unit === '배') return v.toFixed(2);
+    if(unit === '원') return n(v);
     return amt(v);
   }
 
@@ -699,7 +700,7 @@
     else {
       var nim = c.nim[i];
       if(nim < 2) push('warn','최종 이익 얇음','순이익률 '+nim.toFixed(2)+'%로 영업이익 대비 최종 이익이 크게 줄었습니다. 영업외 손익을 확인할 필요가 있습니다.');
-      else push('good','최종 이익 확보','순이익률 '+nim.toFixed(2)+'%, 당기순이익 '+n(c.ni[i])+'억원입니다.');
+      else push('good','최종 이익 확보','순이익률 '+nim.toFixed(2)+'%, 당기순이익 '+amt(c.ni[i])+unitLabel()+'입니다.');
     }
 
     if(debtR > 300) push('danger','재무 레버리지 과다','부채비율 '+debtR.toFixed(1)+'%로 자기자본의 3배를 넘는 부채를 안고 있습니다.');
@@ -712,11 +713,11 @@
     else if(roe >= 15) push('good','자본 효율 높음','ROE '+roe.toFixed(2)+'%로 자기자본을 효율적으로 굴렸습니다.');
     else push('neutral','자본 효율 보통','ROE '+roe.toFixed(2)+'%입니다.');
 
-    if(ocf < 0) push('warn','영업활동 현금흐름 유출','영업활동현금흐름이 '+n(ocf)+'억원으로 마이너스입니다(연결 표기 기준). 이익과 현금이 어긋나는지 확인이 필요합니다.');
-    else push('good','현금 창출 확인','영업활동현금흐름 '+n(ocf)+'억원으로 이익이 현금으로 들어왔습니다.');
+    if(ocf < 0) push('warn','영업활동 현금흐름 유출','영업활동현금흐름이 '+amt(ocf)+unitLabel()+'으로 마이너스입니다(연결 표기 기준). 이익과 현금이 어긋나는지 확인이 필요합니다.');
+    else push('good','현금 창출 확인','영업활동현금흐름 '+amt(ocf)+unitLabel()+'으로 이익이 현금으로 들어왔습니다.');
 
-    if(fcf < 0) push('warn','투자 후 현금 부족','FCF(영업현금흐름−CAPEX)가 '+n(fcf)+'억원으로 마이너스입니다. 설비투자(CAPEX '+n(c.capex[i])+'억원)가 현금창출을 앞질렀습니다.');
-    else push('good','투자 후 현금 확보','FCF '+n(fcf)+'억원으로 설비투자 후에도 현금이 남았습니다.');
+    if(fcf < 0) push('warn','투자 후 현금 부족','FCF(영업현금흐름−CAPEX)가 '+amt(fcf)+unitLabel()+'으로 마이너스입니다. 설비투자(CAPEX '+amt(c.capex[i])+unitLabel()+')가 현금창출을 앞질렀습니다.');
+    else push('good','투자 후 현금 확보','FCF '+amt(fcf)+unitLabel()+'으로 설비투자 후에도 현금이 남았습니다.');
 
     if(revG != null){
       if(revG >= 0 && c.rev[p] >= c.rev[0]) push('good','매출 성장세','매출이 3년 연속 늘었습니다(최근 '+revG.toFixed(1)+'% 증가).');
@@ -724,7 +725,7 @@
       else push('neutral','매출 회복','최근 매출은 전년 대비 '+revG.toFixed(1)+'% 늘었습니다.');
     }
 
-    if(ibdG != null && ibdG > 50) push('warn','이자발생부채 증가','이자발생부채가 3년 사이 '+ibdG.toFixed(0)+'% 늘어 '+n(c.ibd[i])+'억원이 되었습니다. 금리 부담을 함께 봐야 합니다.');
+    if(ibdG != null && ibdG > 50) push('warn','이자발생부채 증가','이자발생부채가 3년 사이 '+ibdG.toFixed(0)+'% 늘어 '+amt(c.ibd[i])+unitLabel()+'이 되었습니다. 금리 부담을 함께 봐야 합니다.');
 
     return out;
   }
@@ -816,7 +817,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.seg button'), function(x){
         x.setAttribute('aria-pressed', x===b ? 'true':'false');
       });
-      renderKpi(); renderStatements(); renderChart();
+      renderKpi(); renderStatements(); renderChart(); renderDiagnosis();
     });
   });
   document.getElementById('yoyToggle').addEventListener('change', function(e){
