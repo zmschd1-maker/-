@@ -463,6 +463,9 @@
     if(!r) return '';
     if(r.flip) return '<span class="yoy ' + (v>0?'up':'dn') + '">' + r.txt + '</span>';
     if(Math.abs(r.pct) < 0.05) return '<span class="yoy flat">–</span>';
+    if(v < 0 && prev < 0){
+      return '<span class="yoy ' + (r.pct>0?'up':'dn') + '">유출 ' + (r.pct>0?'+':'−') + Math.abs(r.pct).toFixed(1) + '%</span>';
+    }
     return '<span class="yoy ' + (r.pct>0?'up':'dn') + '">' + (r.pct>0?'▲':'▼') + Math.abs(r.pct).toFixed(1) + '%</span>';
   }
 
